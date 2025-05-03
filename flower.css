@@ -1,0 +1,92 @@
+.flower {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  background-color: skyblue;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 0.25cqmin;
+}
+
+.flower * {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  border-style: solid;
+  border-width: 0.25cqmin;
+  overflow: hidden;
+}
+
+.flower .petal1 {
+  width: 10%;
+  height: 25%;
+  background-color: var(--petal-color1);
+  border-radius: 50% 50% 50% var(--petal-corner1);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
+}
+
+.flower .petal2 {
+  width: 23%;
+  height: 37%;
+  background-color: var(--petal-color2);
+  border-radius: 50% 50% 50% var(--petal-corner2);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
+}
+
+.flower .petal3 {
+  width: 23%;
+  height: 45%;
+  background-color: var(--petal-color3);
+  border-radius: 50% 50% var(--petal-corner3) var(--petal-corner3);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
+}
+
+.flower .center {
+  width: 16%;
+  height: 16%;
+  background-color: var(--center-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.flower .stem {
+  width: 7%;
+  height: 60%;
+  background-color: #4d8076;
+  transform: translate(-50%, -50%) translateY(50%);
+  display: var(--display-stem);
+}
+
+.flower .leaf {
+  top: 90%;
+  width: 25%;
+  height: 60%;
+  background-color: #00c9a7;
+  border-radius: 40%;
+  display: var(--display-stem);
+}
+
+.flower .leaf.left {
+  transform: translate(-130%, -20%) rotate(-40deg);
+}
+
+.flower .leaf.right {
+  display: var(--display-right-leaf);
+  transform: translate(80%, -40%) rotate(65deg);
+}
+
+.flower .nerve {
+  width: 0px;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  border-width: 0.12cqmin;
+}
+
+.flower .nerve.secondary.right {
+  /*  Bewteen -100% and 0% */
+  transform: translate(-50%, var(--position)) rotate(45deg) translate(0%, -50%)
+}
+
+.flower .nerve.secondary.left {
+  transform: translate(-50%, var(--position)) rotate(-45deg) translate(0%, -50%)
+}

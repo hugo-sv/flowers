@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1%;
+  padding: 1%;
+}
+
+.buttonRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3%;
+  padding: 3%;
+  text-align: center;
+  border-style: solid;
+  border-width: 0.25cqmin;
+}
+
+.btn {
+  text-align: center;
+  border-style: solid;
+  border-width: 0.25cqmin;
+  padding: 1%;
+  border-radius: 10%;
+}
+
+.greenhouse {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-style: solid;
+  border-width: 0.25cqmin;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1%;
+  justify-self: center;
+}
