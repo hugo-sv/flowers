@@ -2,55 +2,113 @@
   box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
 .column {
-  float: left;
-  width: 33%;
-  padding: 10px;
+  padding: 1%;
 }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.column>h2 {
+  text-align: center;
 }
 
-.grid-container {
+.row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1%;
+}
+
+.grid-container-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-container-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid-container-4>div {
   padding: 1%;
+}
+
+.grid-container-3>div {
+  padding: 3%;
 }
 
 .buttonRow {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 3%;
-  padding: 3%;
   text-align: center;
-  border-style: solid;
-  border-width: 0.25cqmin;
+}
+
+.flowerButtonRow .btn {
+  border-bottom: none;
+}
+
+.greenhouseButtonRow>button {
+  margin: 3%;
+  padding: 3%;
 }
 
 .btn {
   text-align: center;
   border-style: solid;
   border-width: 0.25cqmin;
-  padding: 1%;
-  border-radius: 10%;
+  background-color: white;
 }
 
-.greenhouse {
-  display: grid;
-  grid-template-columns: 1fr;
+.btn:not([disabled]):hover {
+  background-color: lightgrey;
+}
+
+.flowerButtonRow .btn+.btn {
+  border-left: none;
+}
+
+.achievement {
+  padding: 0.5cqmin;
   border-style: solid;
   border-width: 0.25cqmin;
+  display: flex;
+  background: linear-gradient(to right,
+      color-mix(in hsl, rgba(255, 0, 0, 0.2), rgba(0, 255, 0, 0.2) var(--percent)) var(--percent), transparent var(--percent));
 }
 
-.card {
+.achievementHoverable {
+  filter: brightness(1);
+}
+
+.achievementHoverable:hover {
+  filter: brightness(0.2);
+}
+
+.achievement+.achievement {
+  border-top: none;
+}
+
+.achievement span:first-of-type {
+  padding-right: 5%;
+  flex: 1;
+}
+
+.familyTreeRow {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1%;
-  justify-self: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.familyTreeRow>div {
+  padding: 2%;
+}
+
+.familyTreeRow .parent1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.familyTreeRow .parent2 {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+.familyTreeRow .child {
+  grid-column-start: 1;
+  grid-column-end: 5;
 }

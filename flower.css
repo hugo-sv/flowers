@@ -1,11 +1,17 @@
 .flower {
   position: relative;
-  width: 125px;
-  height: 125px;
-  background-color: skyblue;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background-color: var(--skyColor);
   overflow: hidden;
   border-style: solid;
   border-width: 0.25cqmin;
+  filter: brightness(1);
+}
+
+.flower:hover {
+  filter: brightness(0.9);
 }
 
 .flower * {
@@ -15,37 +21,39 @@
   border-style: solid;
   border-width: 0.25cqmin;
   overflow: hidden;
+  filter: var(--globalFilter);
 }
 
-.flower .petal1 {
-  width: 10%;
-  height: 25%;
-  background-color: var(--petal-color1);
-  border-radius: 50% 50% 50% var(--petal-corner1);
+.flower .petal {
   transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
 }
 
-.flower .petal2 {
-  width: 23%;
-  height: 37%;
-  background-color: var(--petal-color2);
-  border-radius: 50% 50% 50% var(--petal-corner2);
-  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
+.flower .petal.style1 {
+  width: var(--petalWidth1);
+  height: var(--petalHeight1);
+  background-color: var(--petalColor1);
+  border-radius: var(--petalBorder1);
 }
 
-.flower .petal3 {
-  width: 23%;
-  height: 45%;
-  background-color: var(--petal-color3);
-  border-radius: 50% 50% var(--petal-corner3) var(--petal-corner3);
-  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(55%);
+.flower .petal.style2 {
+  width: var(--petalWidth2);
+  height: var(--petalHeight2);
+  background-color: var(--petalColor2);
+  border-radius: var(--petalBorder2);
+}
+
+.flower .petal.style3 {
+  width: var(--petalWidth3);
+  height: var(--petalHeight3);
+  background-color: var(--petalColor3);
+  border-radius: var(--petalBorder3);
 }
 
 .flower .center {
-  width: 16%;
-  height: 16%;
-  background-color: var(--center-color);
-  border-radius: 50%;
+  width: var(--centerSize);
+  height: var(--centerSize);
+  background-color: var(--centerColor);
+  border-radius: 300%;
   transform: translate(-50%, -50%);
 }
 
@@ -54,7 +62,7 @@
   height: 60%;
   background-color: #4d8076;
   transform: translate(-50%, -50%) translateY(50%);
-  display: var(--display-stem);
+  display: var(--displayStem);
 }
 
 .flower .leaf {
@@ -63,7 +71,7 @@
   height: 60%;
   background-color: #00c9a7;
   border-radius: 40%;
-  display: var(--display-stem);
+  display: var(--displayStem);
 }
 
 .flower .leaf.left {
@@ -71,7 +79,7 @@
 }
 
 .flower .leaf.right {
-  display: var(--display-right-leaf);
+  display: var(--displayRightLeaf);
   transform: translate(80%, -40%) rotate(65deg);
 }
 
@@ -83,10 +91,10 @@
 }
 
 .flower .nerve.secondary.right {
-  /*  Bewteen -100% and 0% */
-  transform: translate(-50%, var(--position)) rotate(45deg) translate(0%, -50%)
+  /*  Between -100% and 0% */
+  transform: translate(-50%, var(--position)) rotate(45deg) translate(0%, -50%);
 }
 
 .flower .nerve.secondary.left {
-  transform: translate(-50%, var(--position)) rotate(-45deg) translate(0%, -50%)
+  transform: translate(-50%, var(--position)) rotate(-45deg) translate(0%, -50%);
 }
