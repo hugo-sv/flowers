@@ -761,23 +761,40 @@ const flowerHTML = (flower: Flower, archived: boolean): string => {
   let petal3bis: string = ``;
   let angle: number = 45;
   const step: number = 360 / numberOfPetals;
+  const moving: boolean = !flower.archived && achievementDone("allPlants");
   for (let index = 0; index < numberOfPetals; index++) {
     const otherAngle = angle - step / 2;
-    petal1 += `<div class="petal style1" style="--rotation: ${
-      otherShape ? angle : otherAngle
-    }deg;"></div>`;
-    petal2 += `<div class="petal style2" style="--rotation: ${
-      otherShape ? angle : otherAngle
-    }deg;"></div>`;
-    petal3 += `<div class="petal style3" style="--rotation: ${otherAngle}deg;"></div>`;
+    petal1 += `<div class="petal style1${
+      moving ? ` moving` : ``
+    }" style="--rotation: ${otherShape ? angle : otherAngle}deg;${
+      moving ? `--delay: ${Math.random()}s;` : ``
+    }"></div>`;
+    petal2 += `<div class="petal style2${
+      moving ? ` moving` : ``
+    }" style="--rotation: ${otherShape ? angle : otherAngle}deg;${
+      moving ? `--delay: ${Math.random()}s;` : ``
+    }"></div>`;
+    petal3 += `<div class="petal style3${
+      moving ? ` moving` : ``
+    }" style="--rotation: ${otherAngle}deg;${
+      moving ? `--delay: ${Math.random()}s;` : ``
+    }"></div>`;
     if (doubledPetals) {
-      petal1bis += `<div class="petal style1" style="--rotation: ${
-        otherShape ? otherAngle : angle
-      }deg;"></div>`;
-      petal2bis += `<div class="petal style2" style="--rotation: ${
-        otherShape ? otherAngle : angle
-      }deg;"></div>`;
-      petal3bis += `<div class="petal style3" style="--rotation: ${angle}deg;"></div>`;
+      petal1bis += `<div class="petal style1${
+        moving ? ` moving` : ``
+      }" style="--rotation: ${otherShape ? otherAngle : angle}deg;${
+        moving ? `--delay: ${Math.random()}s;` : ``
+      }"></div>`;
+      petal2bis += `<div class="petal style2${
+        moving ? ` moving` : ``
+      }" style="--rotation: ${otherShape ? otherAngle : angle}deg;${
+        moving ? `--delay: ${Math.random()}s;` : ``
+      }"></div>`;
+      petal3bis += `<div class="petal style3${
+        moving ? ` moving` : ``
+      }" style="--rotation: ${angle}deg;${
+        moving ? `--delay: ${Math.random()}s;` : ``
+      }"></div>`;
     }
     angle += step;
   }

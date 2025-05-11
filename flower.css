@@ -98,3 +98,17 @@
 .flower .nerve.secondary.left {
   transform: translate(-50%, var(--position)) rotate(-45deg) translate(0%, -50%);
 }
+
+.petal.moving {
+  animation: myfirst 7s ease var(--delay) infinite alternate;
+}
+
+@keyframes myfirst {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) rotate(0deg) translateY(55%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) rotate(10deg) translateY(55%);
+  }
+}
