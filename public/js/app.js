@@ -71,6 +71,38 @@ const achievements = {
         description: "Observe <b>all possible flowers</b>.",
         objective: Math.pow(2, numberOfGenes),
     },
+    proveRecessive0: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>darker inner petals</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive1: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>orange outer petals</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive2: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>doubled petals</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive3: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>bigger inner petals</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive4: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>rougher petal edges</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive5: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>lighter pistil</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive6: {
+        dependsOn: ["allPlants"],
+        description: "Prove having <b>darker middle petals</b> is a <b>recessive</b> trait.",
+    },
+    proveRecessive7: {
+        dependsOn: ["allPlants"],
+        description: "Prove <b>blooming at night<b> is a <b>recessive</b> trait.",
+    },
 };
 // Random
 const Try = (chances) => {
@@ -309,6 +341,9 @@ const incrementLastID = () => {
     updateLastID();
     return lastID;
 };
+const updateAchievementsCount = () => __awaiter(void 0, void 0, void 0, function* () {
+    localStorage.setItem("achievementsCount", JSON.stringify(achievementsCount));
+});
 let achievementsCount = {};
 {
     const value = localStorage.getItem("achievementsCount");
@@ -320,15 +355,25 @@ let achievementsCount = {};
     }
     else {
         achievementsCount = JSON.parse(value);
+        let updateAchievements = false;
+        Object.keys(achievements).map((key) => {
+            if (achievementsCount[key] === undefined) {
+                achievementsCount[key] = 0;
+                updateAchievements = true;
+            }
+        });
+        if (updateAchievements) {
+            updateAchievementsCount();
+        }
     }
 }
-const updateAchievementsCount = () => __awaiter(void 0, void 0, void 0, function* () {
-    localStorage.setItem("achievementsCount", JSON.stringify(achievementsCount));
-});
 const incrementAchievement = (tag) => {
     achievementsCount[tag] += 1;
     updateAchievementsCount();
 };
+const updateAchievementsExample = () => __awaiter(void 0, void 0, void 0, function* () {
+    localStorage.setItem("achievementsExample", JSON.stringify(achievementsExample));
+});
 let achievementsExample = {};
 {
     const value = localStorage.getItem("achievementsExample");
@@ -340,11 +385,18 @@ let achievementsExample = {};
     }
     else {
         achievementsExample = JSON.parse(value);
+        let updateAchievements = false;
+        Object.keys(achievements).map((key) => {
+            if (achievementsExample[key] === undefined) {
+                achievementsExample[key] = 0;
+                updateAchievements = true;
+            }
+        });
+        if (updateAchievements) {
+            updateAchievementsExample();
+        }
     }
 }
-const updateAchievementsExample = () => __awaiter(void 0, void 0, void 0, function* () {
-    localStorage.setItem("achievementsExample", JSON.stringify(achievementsExample));
-});
 const setAchievementExample = (tag, flowerId) => {
     achievementsExample[tag] = flowerId;
     updateAchievementsExample();
@@ -548,12 +600,18 @@ const breed = () => {
         if (parent1.get(i) == parent2.get(i) && parent1.get(i) != flower.get(i)) {
             // Flower has a trait that neither parents had
             if (flower.get(i)) {
-                incrementAchievement("mutation");
-                setAchievementExample("mutation", flower.id);
+                if (achievementDone("proveRecessive" + i)) {
+                    incrementAchievement("mutation");
+                    setAchievementExample("mutation", flower.id);
+                }
             }
             else {
                 incrementAchievement("recessive");
                 setAchievementExample("recessive", flower.id);
+                if (!flower.hasMutated()) {
+                    incrementAchievement("proveRecessive" + i);
+                    setAchievementExample("proveRecessive" + i, flower.id);
+                }
             }
         }
     }
@@ -833,11 +891,19 @@ const updateEncyclopedia = () => __awaiter(void 0, void 0, void 0, function* () 
 const updateAchievements = () => __awaiter(void 0, void 0, void 0, function* () {
     const container = document.getElementById("achievements");
     container.innerHTML = ``;
-    const visibleAchievementTags = Object.keys(achievements).filter((tag) => achievementVisible(tag));
+    const containerDone = document.getElementById("achievementsDone");
+    containerDone.innerHTML = ``;
+    // Trait identification achievements
+    const visibleTraitAchievementTags = Object.keys(achievements).filter((tag) => tag.includes("prove") && achievementDone(tag));
+    visibleTraitAchievementTags.forEach((tag) => {
+        appendAchievementCardHTML(containerDone, tag);
+    });
+    // Other achievements
+    const visibleAchievementTags = Object.keys(achievements).filter((tag) => !tag.includes("prove") && achievementVisible(tag));
     // Sort achievements by completion
     visibleAchievementTags.sort((a, b) => achievementCompletion(a) - achievementCompletion(b));
     visibleAchievementTags.forEach((tag) => {
-        appendAchievementCardHTML(container, tag);
+        appendAchievementCardHTML(achievementDone(tag) ? containerDone : container, tag);
     });
 });
 // Initialize DOM components
