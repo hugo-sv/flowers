@@ -596,12 +596,12 @@ const archiveDuplicates = () => {
         return !flower.archived && protectFromArchive(flower);
     })
         .forEach((flower) => {
-        const visualID = flower.visualID();
+        const visualID = flower.visualID() + (flower.hasMutated() ? Flower.MaxVisualID() : 0);
         activeCollection[visualID] = true;
     });
     flowers.forEach((flower) => {
         if (!flower.archived && !protectFromArchive(flower)) {
-            const visualID = flower.visualID();
+            const visualID = flower.visualID() + (flower.hasMutated() ? Flower.MaxVisualID() : 0);
             if (visualID in activeCollection) {
                 flower.archived = true;
                 incrementAchievement("archive");
@@ -694,15 +694,16 @@ const flowerHTML = (flower, archived) => {
     let petal3bis = ``;
     let angle = 45;
     const step = 360 / numberOfPetals;
+    const moving = !flower.archived && achievementDone("allPlants");
     for (let index = 0; index < numberOfPetals; index++) {
         const otherAngle = angle - step / 2;
-        petal1 += `<div class="petal style1" style="--rotation: ${otherShape ? angle : otherAngle}deg;"></div>`;
-        petal2 += `<div class="petal style2" style="--rotation: ${otherShape ? angle : otherAngle}deg;"></div>`;
-        petal3 += `<div class="petal style3" style="--rotation: ${otherAngle}deg;"></div>`;
+        petal1 += `<div class="petal style1${moving ? ` moving` : ``}" style="--rotation: ${otherShape ? angle : otherAngle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
+        petal2 += `<div class="petal style2${moving ? ` moving` : ``}" style="--rotation: ${otherShape ? angle : otherAngle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
+        petal3 += `<div class="petal style3${moving ? ` moving` : ``}" style="--rotation: ${otherAngle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
         if (doubledPetals) {
-            petal1bis += `<div class="petal style1" style="--rotation: ${otherShape ? otherAngle : angle}deg;"></div>`;
-            petal2bis += `<div class="petal style2" style="--rotation: ${otherShape ? otherAngle : angle}deg;"></div>`;
-            petal3bis += `<div class="petal style3" style="--rotation: ${angle}deg;"></div>`;
+            petal1bis += `<div class="petal style1${moving ? ` moving` : ``}" style="--rotation: ${otherShape ? otherAngle : angle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
+            petal2bis += `<div class="petal style2${moving ? ` moving` : ``}" style="--rotation: ${otherShape ? otherAngle : angle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
+            petal3bis += `<div class="petal style3${moving ? ` moving` : ``}" style="--rotation: ${angle}deg;${moving ? `--delay: ${Math.random()}s;` : ``}"></div>`;
         }
         angle += step;
     }
