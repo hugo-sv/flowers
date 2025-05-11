@@ -166,7 +166,7 @@ class Genome {
         let result = 0;
         for (let i = numberOfGenes - 1; i >= 0; i--) {
             result *= 2;
-            result += this.get(i) ? 0 : 1;
+            result += this.get(i) == RecessiveIsRarer(i) ? 0 : 1;
         }
         return result;
     }
