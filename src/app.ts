@@ -330,6 +330,10 @@ type AchievementsCount = {
   [tag: string]: number;
 };
 
+const updateAchievementsCount = async () => {
+  localStorage.setItem("achievementsCount", JSON.stringify(achievementsCount));
+};
+
 let achievementsCount: AchievementsCount = {};
 {
   const value: string | null = localStorage.getItem("achievementsCount");
@@ -343,12 +347,18 @@ let achievementsCount: AchievementsCount = {};
     );
   } else {
     achievementsCount = JSON.parse(value);
+    let updateAchievements: boolean = false;
+    Object.keys(achievements).map((key: string) => {
+      if (achievementsCount[key] === undefined) {
+        achievementsCount[key] = 0;
+        updateAchievements = true;
+      }
+    });
+    if (updateAchievements) {
+      updateAchievementsCount();
+    }
   }
 }
-
-const updateAchievementsCount = async () => {
-  localStorage.setItem("achievementsCount", JSON.stringify(achievementsCount));
-};
 
 const incrementAchievement = (tag: string) => {
   achievementsCount[tag] += 1;
@@ -359,6 +369,13 @@ const incrementAchievement = (tag: string) => {
 
 type AchievementsExample = {
   [tag: string]: number;
+};
+
+const updateAchievementsExample = async () => {
+  localStorage.setItem(
+    "achievementsExample",
+    JSON.stringify(achievementsExample)
+  );
 };
 
 let achievementsExample: AchievementsExample = {};
@@ -374,15 +391,18 @@ let achievementsExample: AchievementsExample = {};
     );
   } else {
     achievementsExample = JSON.parse(value);
+    let updateAchievements: boolean = false;
+    Object.keys(achievements).map((key: string) => {
+      if (achievementsExample[key] === undefined) {
+        achievementsExample[key] = 0;
+        updateAchievements = true;
+      }
+    });
+    if (updateAchievements) {
+      updateAchievementsExample();
+    }
   }
 }
-
-const updateAchievementsExample = async () => {
-  localStorage.setItem(
-    "achievementsExample",
-    JSON.stringify(achievementsExample)
-  );
-};
 
 const setAchievementExample = (tag: string, flowerId: number) => {
   achievementsExample[tag] = flowerId;
