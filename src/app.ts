@@ -963,6 +963,9 @@ const updateEncyclopedia = async () => {
 const updateAchievements = async () => {
   const container: HTMLElement | any = document.getElementById("achievements");
   container.innerHTML = ``;
+  const containerDone: HTMLElement | any =
+    document.getElementById("achievementsDone");
+  containerDone.innerHTML = ``;
   const visibleAchievementTags: string[] = Object.keys(achievements).filter(
     (tag: string) => achievementVisible(tag)
   );
@@ -971,7 +974,10 @@ const updateAchievements = async () => {
     (a, b) => achievementCompletion(a) - achievementCompletion(b)
   );
   visibleAchievementTags.forEach((tag: string) => {
-    appendAchievementCardHTML(container, tag);
+    appendAchievementCardHTML(
+      achievementDone(tag) ? containerDone : container,
+      tag
+    );
   });
 };
 
