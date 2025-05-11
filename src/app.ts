@@ -75,6 +75,45 @@ const achievements: { [tag: string]: Achievement } = {
     description: "Observe <b>all possible flowers</b>.",
     objective: 2 ** numberOfGenes,
   },
+  proveRecessive0: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>darker inner petals</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive1: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>orange outer petals</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive2: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>doubled petals</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive3: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>bigger inner petals</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive4: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>rougher petal edges</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive5: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>lighter pistil</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive6: {
+    dependsOn: ["allPlants"],
+    description:
+      "Prove having <b>darker middle petals</b> is a <b>recessive</b> trait.",
+  },
+  proveRecessive7: {
+    dependsOn: ["allPlants"],
+    description: "Prove <b>blooming at night<b> is a <b>recessive</b> trait.",
+  },
 };
 
 // Random
@@ -623,11 +662,17 @@ const breed = (): void => {
     if (parent1.get(i) == parent2.get(i) && parent1.get(i) != flower.get(i)) {
       // Flower has a trait that neither parents had
       if (flower.get(i)) {
-        incrementAchievement("mutation");
-        setAchievementExample("mutation", flower.id);
+        if (achievementDone("proveRecessive" + i)) {
+          incrementAchievement("mutation");
+          setAchievementExample("mutation", flower.id);
+        }
       } else {
         incrementAchievement("recessive");
         setAchievementExample("recessive", flower.id);
+        if (!flower.hasMutated()) {
+          incrementAchievement("proveRecessive" + i);
+          setAchievementExample("proveRecessive" + i, flower.id);
+        }
       }
     }
   }
@@ -986,8 +1031,16 @@ const updateAchievements = async () => {
   const containerDone: HTMLElement | any =
     document.getElementById("achievementsDone");
   containerDone.innerHTML = ``;
+  // Trait identification achievements
+  const visibleTraitAchievementTags: string[] = Object.keys(
+    achievements
+  ).filter((tag: string) => tag.includes("prove") && achievementDone(tag));
+  visibleTraitAchievementTags.forEach((tag: string) => {
+    appendAchievementCardHTML(containerDone, tag);
+  });
+  // Other achievements
   const visibleAchievementTags: string[] = Object.keys(achievements).filter(
-    (tag: string) => achievementVisible(tag)
+    (tag: string) => !tag.includes("prove") && achievementVisible(tag)
   );
   // Sort achievements by completion
   visibleAchievementTags.sort(
