@@ -656,12 +656,14 @@ const archiveDuplicates = (): void => {
       return !flower.archived && protectFromArchive(flower);
     })
     .forEach((flower) => {
-      const visualID: number = flower.visualID();
+      const visualID: number =
+        flower.visualID() + (flower.hasMutated() ? Flower.MaxVisualID() : 0);
       activeCollection[visualID] = true;
     });
   flowers.forEach((flower) => {
     if (!flower.archived && !protectFromArchive(flower)) {
-      const visualID: number = flower.visualID();
+      const visualID: number =
+        flower.visualID() + (flower.hasMutated() ? Flower.MaxVisualID() : 0);
       if (visualID in activeCollection) {
         flower.archived = true;
         incrementAchievement("archive");
