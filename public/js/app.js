@@ -101,7 +101,7 @@ const achievements = {
     },
     proveRecessive7: {
         dependsOn: ["allPlants"],
-        description: "Prove <b>blooming at night<b> is a <b>recessive</b> trait.",
+        description: "Prove <b>blooming at night</b> is a <b>recessive</b> trait.",
     },
 };
 // Random
