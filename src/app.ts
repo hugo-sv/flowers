@@ -540,6 +540,46 @@ const maxPlantsInGreenHouse = (): boolean => {
   return plantsInGreenhouse() >= maxNumberOfFlowers;
 };
 
+// Database cleanup
+
+const cleanup = async () => {
+  let flowersToKeep: { [id: number]: boolean } = {};
+  let firstForVisual: { [visualID: number]: boolean } = {};
+  flowers.map((flower: Flower) => {
+    if (!flower.archived) {
+      // Keep non archived flowers
+      flowersToKeep[flower.id] = true;
+    }
+    if (firstForVisual[flower.visualID()] === undefined) {
+      // Keep the first flower for each visuals (encyclopedia)
+      firstForVisual[flower.visualID()] = true;
+      flowersToKeep[flower.id] = true;
+    }
+  });
+  Object.values(achievementsExample).map((flowerId: number) => {
+    // Keep flowers illustrating achievements
+    flowersToKeep[flowerId] = true;
+  });
+  const previousNumberOfFlowers: number = flowers.length;
+  for (let index = flowers.length - 1; index >= 0; index--) {
+    const flower: Flower = flowers[index];
+    if (flowersToKeep[flower.id] === undefined) {
+      flowers.splice(index, 1);
+      continue;
+    } else {
+      // Keep all ancestors
+      flowersToKeep[flower.parent1] = true;
+      flowersToKeep[flower.parent2] = true;
+    }
+  }
+  console.log(
+    "Cleaned up %i/%i flowers",
+    previousNumberOfFlowers - flowers.length,
+    previousNumberOfFlowers
+  );
+  updateFlowers();
+};
+
 // Actions
 
 const switchEncyclopediaDisplay = (): void => {
