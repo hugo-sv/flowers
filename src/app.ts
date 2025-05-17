@@ -108,7 +108,7 @@ const achievements: { [tag: string]: Achievement } = {
   proveRecessive6: {
     dependsOn: ["allPlants"],
     description:
-      "Prove having <b>darker middle petals</b> is a <b>recessive</b> trait.",
+      "Prove having <b>purple middle petals</b> is a <b>recessive</b> trait.",
   },
   proveRecessive7: {
     dependsOn: ["allPlants"],
